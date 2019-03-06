@@ -10,8 +10,14 @@ case class MovePlayerCommand(name: String, dice1: Int, dice2: Int) extends Comma
 
 
     replacePosition(name)(x => Position(x.player, x.cell + dice1 + dice2)) match {
-      case Some((oldPos, newPos)) =>
-        Some(s"${newPos.player.name} rolls $dice1, $dice2. ${newPos.player.name} moves from ${oldPos.cell} to ${newPos.cell}")
+      case Some((oldPos, newPos)) => {
+        val value = s"${newPos.player.name} rolls $dice1, $dice2. ${newPos.player.name} moves from ${oldPos.cell} to ${newPos.cell}"
+        if (newPos.cell.isFinishCell)
+          Some(value.concat(s". ${newPos.player.name} Wins!!"))
+        else
+          Some(value)
+      }
+
 
       case _ => Some("Can not make a move")
     }

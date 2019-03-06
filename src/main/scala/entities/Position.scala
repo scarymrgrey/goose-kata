@@ -8,4 +8,6 @@ case class Cell(n: Int) {
   override def toString: String = translate(n)
 
   def +(thatN: Int): Cell = Cell(this.n + thatN)
+
+  def isFinishCell: Boolean = n == 63
 }

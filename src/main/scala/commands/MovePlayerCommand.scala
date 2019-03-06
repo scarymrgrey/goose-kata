@@ -2,7 +2,6 @@ package commands
 
 import entities.{Position}
 import infrastructure.DataBase
-import entities.BoardMap._
 
 case class MovePlayerCommand(name: String, dice1: Int, dice2: Int) extends CommandBase[Option[String]] {
   override def execute()(implicit ctx: DataBase): Option[String] = {

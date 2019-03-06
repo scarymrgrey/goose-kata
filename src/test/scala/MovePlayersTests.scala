@@ -22,6 +22,7 @@ class MovePlayersTests extends FlatSpec {
     ("move Pluto 2, 2","Pluto rolls 2, 2. Pluto moves from Start to 4",(6,4)),
     ("move Pippo 2, 3","Pippo rolls 2, 3. Pippo moves from 6 to 11",(11,4)),
   )
+
   for (step <- steps) {
     val commandsText = step._2
     it should s"responds: ${step._1} if the user writes: ${commandsText}" in {
@@ -33,6 +34,5 @@ class MovePlayersTests extends FlatSpec {
       ctx.positions should contain only (Position(pippo, pipposCell),Position(pluto, plutossCell))
     }
   }
-
 
 }

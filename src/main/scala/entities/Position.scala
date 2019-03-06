@@ -2,12 +2,28 @@ package entities
 
 import entities.BoardMap._
 
-case class Position(player: Player, cell: Cell)
+sealed abstract class BaseCell {
+  val n: Int
 
-case class Cell(n: Int) {
   override def toString: String = translate(n)
 
-  def +(thatN: Int): Cell = Cell(this.n + thatN)
+  def moveOn(n: Int): BaseCell = this
+}
 
-  def isFinishCell: Boolean = n == 63
+case class Position(player: Player, cell: BaseCell) {
+  def moveOn(n: Int) = Position(player, cell.moveOn(n))
+}
+
+case object FinishCell extends BaseCell {
+  val n = 63
+}
+
+
+case class Cell(n: Int) extends BaseCell {
+  override def moveOn(n: Int): BaseCell = this.n + n match {
+    case FinishCell.n => FinishCell
+    case a if a > FinishCell.n => Cell(a % FinishCell.n)
+    case 6 => Cell(12)
+    case x => Cell(x)
+  }
 }

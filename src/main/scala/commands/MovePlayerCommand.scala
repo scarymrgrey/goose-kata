@@ -1,6 +1,6 @@
 package commands
 
-import entities.{Position}
+import entities.{BridgeCell, FinishCell, Position}
 import infrastructure.DataBase
 
 case class MovePlayerCommand(name: String, dice1: Int, dice2: Int) extends CommandBase[Option[String]] {
@@ -8,18 +8,17 @@ case class MovePlayerCommand(name: String, dice1: Int, dice2: Int) extends Comma
     val player = ctx.players.filter(r => r.name == name).headOption
     require(player.isDefined, s"no player with name $name")
 
+    replacePosition(name)(x => x.moveOn(dice1 + dice2)) map {
 
-    replacePosition(name)(x => Position(x.player, x.cell + dice1 + dice2)) match {
-      case Some((oldPos, newPos)) => {
+      case (oldPos, newPos) => {
         val value = s"${newPos.player.name} rolls $dice1, $dice2. ${newPos.player.name} moves from ${oldPos.cell} to ${newPos.cell}"
-        if (newPos.cell.isFinishCell)
-          Some(value.concat(s". ${newPos.player.name} Wins!!"))
-        else
-          Some(value)
+        newPos.cell match {
+          case FinishCell => value.concat(s". ${newPos.player.name} Wins!!")
+          case BridgeCell => value.concat(s". ${newPos.player.name} Wins!!")
+        }
       }
 
-
-      case _ => Some("Can not make a move")
+      case _ => "Can not make a move"
     }
   }
 

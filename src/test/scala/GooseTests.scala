@@ -15,7 +15,7 @@ class GooseTests extends FlatSpec {
   it should "responds: \"players: Pippo, Pluto\" if the user writes: \"add player Pluto\"" in {
     val command = CommandParser getCommand "add player Pluto"
     assert(command.execute contains "players: Pippo, Pluto")
-    assert(ctx.users contains (User("Pippo"),User("Pluto")))
+    assert(ctx.users map(_.name) containsSlice Array("Pippo","Pluto"))
   }
 
   behavior of "If there is already a participant \"Pippo\" the system"

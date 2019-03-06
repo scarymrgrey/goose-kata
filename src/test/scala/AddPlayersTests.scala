@@ -3,7 +3,7 @@ import infrastructure.{CommandParser, DataBase, DataBaseInstance}
 import org.scalatest.FlatSpec
 
 class AddPlayersTests extends FlatSpec {
-  implicit val ctx: DataBase = DataBaseInstance
+  implicit val ctx: DataBase = new DataBase()
 
   behavior of "If there is no participant the system"
   it should "responds: \"players: Pippo\" if the user writes: \"add player Pippo\"" in {
@@ -19,8 +19,12 @@ class AddPlayersTests extends FlatSpec {
   }
 
   behavior of "If there is already a participant \"Pippo\" the system"
-  it should "responds: \"Pippo: already existing player\" if the user writes: \"add player Pippo\"" in {
+  val existMessage = "Pippo: already existing player"
+  it should s"responds: $existMessage if the user writes: add player Pippo" in {
     val command = CommandParser getCommandFrom "add player Pippo"
-    assert(command.execute contains "Pippo: already existing player")
+    val ex = intercept[IllegalArgumentException]{
+      command execute
+    }
+    assert(ex.getMessage contains existMessage)
   }
 }

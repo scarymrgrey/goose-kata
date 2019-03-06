@@ -1,0 +1,5 @@
+.idea/
+project/target/scala-2.12/
+project/target/config-classes/
+project/target/
+target/

@@ -1,26 +1,26 @@
-import entities.User
+import entities.Player
 import infrastructure.{CommandParser, DataBase, DataBaseInstance}
 import org.scalatest.FlatSpec
 
-class GooseTests extends FlatSpec {
+class AddPlayersTests extends FlatSpec {
   implicit val ctx: DataBase = DataBaseInstance
 
   behavior of "If there is no participant the system"
   it should "responds: \"players: Pippo\" if the user writes: \"add player Pippo\"" in {
-    val command = CommandParser getCommand "add player Pippo"
+    val command = CommandParser getCommandFrom "add player Pippo"
     assert(command.execute contains "players: Pippo")
-    assert(ctx.users contains User("Pippo"))
+    assert(ctx.players contains Player("Pippo"))
   }
 
   it should "responds: \"players: Pippo, Pluto\" if the user writes: \"add player Pluto\"" in {
-    val command = CommandParser getCommand "add player Pluto"
+    val command = CommandParser getCommandFrom "add player Pluto"
     assert(command.execute contains "players: Pippo, Pluto")
-    assert(ctx.users map(_.name) containsSlice Array("Pippo","Pluto"))
+    assert(ctx.players map(_.name) containsSlice Array("Pippo","Pluto"))
   }
 
   behavior of "If there is already a participant \"Pippo\" the system"
   it should "responds: \"Pippo: already existing player\" if the user writes: \"add player Pippo\"" in {
-    val command = CommandParser getCommand "add player Pippo"
+    val command = CommandParser getCommandFrom "add player Pippo"
     assert(command.execute contains "Pippo: already existing player")
   }
 }

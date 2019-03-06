@@ -1,12 +1,12 @@
 package infrastructure
 
-import entities.Player
+import entities.{Player, Position}
 
 import scala.collection.mutable.ArrayBuffer
 
 class DataBase {
   val players: ArrayBuffer[Player] = scala.collection.mutable.ArrayBuffer.empty[Player]
-  val positions: ArrayBuffer[(Player,Int)] = scala.collection.mutable.ArrayBuffer.empty[(Player,Int)]
+  val positions: ArrayBuffer[Position] = scala.collection.mutable.ArrayBuffer.empty[Position]
 }
 
 object DataBaseInstance extends DataBase

@@ -1,4 +1,5 @@
-import entities.Player
+
+import entities.{Player, Position}
 import infrastructure.{CommandParser, DataBase, DataBaseInstance}
 import org.scalatest.FlatSpec
 
@@ -15,8 +16,8 @@ class MovePlayersTests extends FlatSpec {
 
     ctx.players += pippo
     ctx.players += pluto
-    ctx.positions+= ((pluto,0))
-    ctx.positions+= ((pippo,0))
+    ctx.positions+= Position(pluto,0)
+    ctx.positions+= Position(pippo,0)
 
     assert(command.execute contains response)
     assert(ctx.positions contains ((pippo,6)))

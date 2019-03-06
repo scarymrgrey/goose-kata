@@ -7,11 +7,14 @@ object GooseMain extends App {
 
   while (execute(scala.io.StdIn.readLine())) {}
 
-  def execute(input: String): Boolean =
-    (Try(CommandParser.getCommandFrom(input) execute) match {
-      case Success(x) =>
-        println(x)
-        true
-      case Failure(x) => false
-    }).get
+  def execute(input: String): Boolean = {
+    val commandResult = Try(CommandParser.getCommandFrom(input) execute) recover {
+      case exception: Exception => Some(exception.getMessage())
+    }
+
+    commandResult get match {
+      case Some(x) => println(x);true
+      case None => false
+    }
+  }
 }

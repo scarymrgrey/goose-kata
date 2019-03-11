@@ -10,11 +10,9 @@ case class MovePlayerCommand(name: String, dice1: Int, dice2: Int) extends Comma
 
     val value = s"$name rolls $dice1, $dice2. "
     (replacePosition(name)(x => x.moveOn(dice1 + dice2)) map {
-      case (_: WinPosition, strRes) =>
-        Right(value.concat(strRes))
-      case (_: Position, strRes) =>
-        Left(value.concat(strRes))
-      case _ => Right("Can not make a move")
+      case (_: WinPosition, strRes) => Right(value.concat(strRes))
+      case (_: Position, strRes) => Left(value.concat(strRes))
+      case _ => Left("Can not make a move")
     }).get
   }
 

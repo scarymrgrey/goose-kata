@@ -5,8 +5,9 @@ import scala.util.{Failure, Success, Try}
 object GooseMain extends App {
 
   implicit val ctx: DataBase = DataBaseInstance
-
-  while (execute(scala.io.StdIn.readLine())) {}
+  println(">the goose game (q for quit)<")
+  while (execute(scala.io.StdIn.readLine("command: "))) {}
+  println("exiting...")
 
   def execute(input: String): Boolean = {
     val commandResult = Try(CommandParserFactory.default.getCommandFrom(input) execute) recover {

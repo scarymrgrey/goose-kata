@@ -11,13 +11,15 @@ sealed abstract class BaseCell {
 }
 
 case class Position(player: Player, cell: BaseCell) {
-  def moveOn(n: Int) = Position(player, cell.moveOn(n))
+  def moveOn(n: Int): (Position, String) = cell.moveOn(n) match {
+    case FinishCell => (Position(player, FinishCell), "")
+    case `cell` => (Position(player, cell), "")
+  }
 }
 
 case object FinishCell extends BaseCell {
   val n = 63
 }
-
 
 case class Cell(n: Int) extends BaseCell {
   override def moveOn(n: Int): BaseCell = this.n + n match {

@@ -25,7 +25,7 @@ class MovePlayersTests extends FlatSpec {
 
   for (step <- steps) {
     val commandsText = step._2
-    it should s"responds: ${step._1} if the user writes: ${commandsText}" in {
+    it should s"responds: ${step._1} if the user writes: $commandsText" in {
       val command = CommandParser getCommandFrom step._1
 
       command.execute should contain (commandsText)

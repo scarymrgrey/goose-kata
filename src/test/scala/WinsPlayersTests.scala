@@ -1,32 +1,38 @@
 
 import entities.{Player, Position}
-import infrastructure.{CommandParser, CommandParserFactory, DataBase}
+import infrastructure.{CommandParserFactory, DataBase}
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, _}
 
 class WinsPlayersTests extends FlatSpec {
-
-  private val commandParser = CommandParserFactory.default
-  implicit val ctx: DataBase = new DataBase()
   val pippo = Player("Pippo")
 
-  ctx.players += pippo
-  ctx.positions += Position(pippo, 60)
+  def fixture =
+    new {
+      val commandParser = CommandParserFactory.default
+      val ctx: DataBase = new DataBase()
+
+      ctx.players += pippo
+      ctx.positions += Position(pippo, 60)
+    }
+
 
   behavior of "If there is one participant \"Pippo\" on space \"60\" the system"
-
-  val steps = Array(
-    ("move Pippo 1, 2", "Pippo rolls 1, 2. Pippo moves from 60 to 63. Pippo Wins!!")
+  val cases = Array(
+    ("move Pippo 1, 2", "Pippo rolls 1, 2. Pippo moves from 60 to 63. Pippo Wins!!",63),
+    ("move Pippo 3, 2", "Pippo rolls 3, 2. Pippo moves from 60 to 63. Pippo bounces! Pippo returns to 61",61)
   )
 
-  for (step <- steps) {
-    val commandText = step._2.toString
-    it should s"responds: $commandText  if the user writes: ${step._1}" in {
-      val command = commandParser getCommandFrom step._1
-      command.execute should equal(Right(commandText))
+  for (onecase <- cases) {
+    val responseText = onecase._2.toString
+    it should s"responds: $responseText  when the user writes: ${onecase._1}" in {
+      val f = fixture
+      implicit val ctx = f.ctx
+      val command = f.commandParser getCommandFrom onecase._1
+      val value = command.execute match {case Left(value) => value case Right(value) => value}
+      value should equal(responseText)
 
-      ctx.positions should contain only Position(pippo, 63)
+      ctx.positions should contain only Position(pippo, onecase._3)
     }
   }
-
 }

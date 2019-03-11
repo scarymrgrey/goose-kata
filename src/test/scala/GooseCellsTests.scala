@@ -20,7 +20,7 @@ class GooseCellsTests extends FlatSpec {
     ctx.positions += Position(pippo, 3)
     val steps = ("move Pippo", "Pippo rolls 1, 1. Pippo moves from 3 to 5, The Goose. Pippo moves again and goes to 7")
     val responseText = steps._2.toString
-    it should s"responds: $responseText  if the user writes: ${steps._1}" in {
+    it should s"responds: $responseText  when the user writes: ${steps._1}" in {
       val commandParser = CommandParser(new Dice{
         override def getSides: (Int, Int) = (1,1)
       })
@@ -42,7 +42,7 @@ class GooseCellsTests extends FlatSpec {
     val testText = ("move Pippo 2, 2", "Pippo rolls 2, 2. Pippo moves from 10 to 14, The Goose. Pippo moves again and goes to 18, The Goose. Pippo moves again and goes to 22")
 
     val commandText = testText._2.toString
-    it should s"responds: $commandText  if the user writes: ${testText._1}" in {
+    it should s"responds: $commandText  when the user writes: ${testText._1}" in {
       val commandParser = CommandParser(new Dice{
         override def getSides: (Int, Int) = (2,2)
       })

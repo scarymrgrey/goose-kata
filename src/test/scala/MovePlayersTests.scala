@@ -25,7 +25,7 @@ class MovePlayersTests extends FlatSpec {
 
   for (step <- steps) {
     val commandsText = step._2
-    it should s"responds: $commandsText if the user writes: ${step._1}" in {
+    it should s"responds: $commandsText when the user writes: ${step._1}" in {
       val command = commandParser getCommandFrom step._1
 
       command.execute should equal(Left(commandsText))
@@ -34,5 +34,4 @@ class MovePlayersTests extends FlatSpec {
       ctx.positions should contain only (Position(pippo, pipposCell),Position(pluto, plutossCell))
     }
   }
-
 }

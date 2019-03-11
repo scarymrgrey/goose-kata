@@ -9,14 +9,14 @@ class Board(val positions: ArrayBuffer[BasePosition]) {
       val newPos = oldPos.moveOn(n)
       updatePos(oldPos, newPos._1)
       positions.find(r => r.player != player && r.cell == newPos._1.cell) match {
-        case Some(prankPosition) =>
-          updatePos(prankPosition, Position(prankPosition.player, oldPos.cell))
-          (newPos._1, s"${newPos._2}. On ${newPos._1.cell} there is ${prankPosition.player.name}, who returns to ${oldPos.cell}")
+        case Some(collision) =>
+          updatePos(collision, Position(collision.player, oldPos.cell))
+          (newPos._1, s"${newPos._2}. On ${newPos._1.cell} there is ${collision.player.name}, who returns to ${oldPos.cell}")
         case None => newPos
       }
     }).get
 
-  def updatePos(oldP: BasePosition, newP: BasePosition): Unit = {
+  private def updatePos(oldP: BasePosition, newP: BasePosition): Unit = {
     positions.update(positions.indexOf(oldP), newP)
   }
 }

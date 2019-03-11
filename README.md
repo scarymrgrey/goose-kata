@@ -7,7 +7,18 @@
 
 <h1>Compile & Run</h1>
 
-<div class="highlight highlight-text-shell-session"><pre><span class="pl-e">for@bar:~</span>$ <span class="pl-s1">git clone</span>
-<span class="pl-e">for@bar:~</span>$ <span class="pl-s1">
-<span class="pl-c1">cd</span> goose-kata</span></pre>
+<div class="highlight highlight-text-shell-session">
+<pre>
+<span class="pl-c1">https://github.com/scarymrgrey/goose-kata.git</span>
+<span class="pl-c1">cd goose-kata</span>
+<span class="pl-c1">sbt run</span>
+</pre>
+</div>
+
+<h1>Run tests</h1>
+
+<div class="highlight highlight-text-shell-session">
+<pre>
+<span class="pl-c1">sbt test</span>
+</pre>
 </div>

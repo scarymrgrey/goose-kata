@@ -1,11 +1,11 @@
 
-import entities.{ Player, Position}
-import infrastructure.{CommandParser, DataBase}
-import org.scalatest.FlatSpec
-import org.scalatest._
-import Matchers._
+import entities.{Player, Position}
+import infrastructure.{CommandParserFactory, DataBase}
+import org.scalatest.Matchers._
+import org.scalatest.{FlatSpec, _}
 
 class MovePlayersTests extends FlatSpec {
+  private val commandParser = CommandParserFactory.default
   implicit val ctx: DataBase = new DataBase()
   val pippo = Player("Pippo")
   val pluto = Player("Pluto")
@@ -26,7 +26,7 @@ class MovePlayersTests extends FlatSpec {
   for (step <- steps) {
     val commandsText = step._2
     it should s"responds: $commandsText if the user writes: ${step._1}" in {
-      val command = CommandParser getCommandFrom step._1
+      val command = commandParser getCommandFrom step._1
 
       command.execute should equal(Left(commandsText))
       val pipposCell = step._3._1

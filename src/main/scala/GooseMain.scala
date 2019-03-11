@@ -1,4 +1,5 @@
-import infrastructure.{CommandParser, DataBase, DataBaseInstance}
+import infrastructure.{CommandParser, CommandParserFactory, DataBase, DataBaseInstance}
+
 import scala.util.{Failure, Success, Try}
 
 object GooseMain extends App {
@@ -8,7 +9,7 @@ object GooseMain extends App {
   while (execute(scala.io.StdIn.readLine())) {}
 
   def execute(input: String): Boolean = {
-    val commandResult = Try(CommandParser.getCommandFrom(input) execute) recover {
+    val commandResult = Try(CommandParserFactory.default.getCommandFrom(input) execute) recover {
       case exception: Exception => Left(exception.getMessage)
     }
 

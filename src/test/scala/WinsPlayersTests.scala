@@ -1,10 +1,12 @@
 
 import entities.{Player, Position}
-import infrastructure.{CommandParser, DataBase}
+import infrastructure.{CommandParser, CommandParserFactory, DataBase}
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, _}
 
 class WinsPlayersTests extends FlatSpec {
+
+  private val commandParser = CommandParserFactory.default
   implicit val ctx: DataBase = new DataBase()
   val pippo = Player("Pippo")
 
@@ -20,7 +22,7 @@ class WinsPlayersTests extends FlatSpec {
   for (step <- steps) {
     val commandText = step._2.toString
     it should s"responds: $commandText  if the user writes: ${step._1}" in {
-      val command = CommandParser getCommandFrom step._1
+      val command = commandParser getCommandFrom step._1
       command.execute should equal(Right(commandText))
 
       ctx.positions should contain only Position(pippo, 63)

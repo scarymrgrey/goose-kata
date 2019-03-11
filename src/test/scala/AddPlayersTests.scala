@@ -8,13 +8,13 @@ class AddPlayersTests extends FlatSpec {
   behavior of "If there is no participant the system"
   it should "responds: \"players: Pippo\" if the user writes: \"add player Pippo\"" in {
     val command = CommandParser getCommandFrom "add player Pippo"
-    assert(command.execute contains "players: Pippo")
+    assert(command.execute equals  Left("players: Pippo"))
     assert(ctx.players contains Player("Pippo"))
   }
 
   it should "responds: \"players: Pippo, Pluto\" if the user writes: \"add player Pluto\"" in {
     val command = CommandParser getCommandFrom "add player Pluto"
-    assert(command.execute contains "players: Pippo, Pluto")
+    assert(command.execute equals Left("players: Pippo, Pluto"))
     assert(ctx.players map(_.name) containsSlice Array("Pippo","Pluto"))
   }
 

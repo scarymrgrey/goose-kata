@@ -3,7 +3,7 @@ package infrastructure
 import commands.{AddPlayerCommand, CommandBase, MovePlayerCommand, UnknownCommand}
 
 object CommandParser {
-  def getCommandFrom(input: String): CommandBase[Option[String]] = {
+  def getCommandFrom(input: String): CommandBase[Either[String, String]] = {
     val addPlayerPattern = """add\s+player\s+(\w+)\s*""".r
     val movePlayerPattern = """move\s+(\w+)\s+(\d)\s*,\s*(\d)""".r
     input match {

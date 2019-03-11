@@ -1,6 +1,6 @@
 package entities
 
 object BoardMap {
-  val mapping = Map((0-> "Start"))
-  def translate(n: Int): String = mapping.getOrElse(n,n.toString())
+  val mapping: Map[Int, String] = Map(0-> "Start",6 -> "The Bridge")
+  def translate(n: Int): String = mapping.getOrElse(n,n.toString)
 }

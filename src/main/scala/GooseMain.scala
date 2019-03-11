@@ -9,12 +9,12 @@ object GooseMain extends App {
 
   def execute(input: String): Boolean = {
     val commandResult = Try(CommandParser.getCommandFrom(input) execute) recover {
-      case exception: Exception => Some(exception.getMessage())
+      case exception: Exception => Left(exception.getMessage)
     }
 
     commandResult get match {
-      case Some(x) => println(x);true
-      case None => false
+      case Left(x) => println(x); true
+      case Right(x) => println(x); false
     }
   }
 }

@@ -4,8 +4,6 @@ import infrastructure.{CommandParser, DataBase}
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, _}
 
-import scala.collection.mutable.ArrayBuffer
-
 class WinsPlayersTests extends FlatSpec {
   implicit val ctx: DataBase = new DataBase()
   val pippo = Player("Pippo")

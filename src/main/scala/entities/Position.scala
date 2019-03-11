@@ -18,9 +18,9 @@ sealed abstract class BasePosition {
 
     def moveOnInner(prev: Int, n: Int, innerText: String): (BasePosition, String) = prev + n match {
       case 63 => (WinPosition(player, 63), innerText.concat(s". $player Wins!!"))
-      case a if a > 63 => (Position(player, 63 - (a - 63)), s"${innerText}. $player bounces! $player returns to ${63 - (a - 63)}")
-      case 6 => (Position(player, 12), s"${innerText}. $player jumps to 12")
-      case sum@(5 | 9 | 14 | 18 | 23 | 27) => moveOnInner(sum, n, s"${innerText}, The Goose. $player moves again and goes to ${sum + n}")
+      case a if a > 63 => (Position(player, 63 - (a - 63)), s"$innerText. $player bounces! $player returns to ${63 - (a - 63)}")
+      case 6 => (Position(player, 12), s"$innerText. $player jumps to 12")
+      case sum@(5 | 9 | 14 | 18 | 23 | 27) => moveOnInner(sum, n, s"$innerText, The Goose. $player moves again and goes to ${sum + n}")
       case x => (Position(player, x), innerText)
     }
 

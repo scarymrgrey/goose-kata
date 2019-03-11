@@ -1,6 +1,6 @@
 
 import entities.{Player, Position}
-import infrastructure.{CommandParserFactory, DataBase}
+import infrastructure.{CommandParser, CommandParserFactory, DataBase}
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, _}
 
@@ -9,9 +9,8 @@ class WinsPlayersTests extends FlatSpec {
 
   def fixture =
     new {
-      val commandParser = CommandParserFactory.default
+      val commandParser: CommandParser = CommandParserFactory.default
       val ctx: DataBase = new DataBase()
-
       ctx.players += pippo
       ctx.positions += Position(pippo, 60)
     }

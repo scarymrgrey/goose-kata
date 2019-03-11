@@ -1,6 +1,6 @@
 package infrastructure
 
-import entities.{BasePosition, Player, Position}
+import entities.{BasePosition, Board, Player, Position}
 
 import scala.collection.mutable.ArrayBuffer
 
